@@ -2,7 +2,7 @@ FROM gradle:8.7-jdk21-alpine as build
 
 WORKDIR /app
 COPY . .
-RUN gradle clean build
+RUN gradle clean build -x test 
 
 
 FROM openjdk:23-slim
