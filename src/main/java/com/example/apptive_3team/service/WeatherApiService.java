@@ -4,7 +4,6 @@ import com.example.apptive_3team.config.WeatherApiConfig;
 import com.example.apptive_3team.domain.WeatherData;
 import com.example.apptive_3team.dto.WeatherDataDTO;
 import com.example.apptive_3team.repository.WeatherRepository;
-import lombok.Value;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
