@@ -1,4 +1,4 @@
-package com.example.apptive_3team.domain;
+package com.example.apptive_3team.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
