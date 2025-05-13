@@ -1,9 +1,10 @@
 package com.example.apptive_3team.service;
 
 import com.example.apptive_3team.config.WeatherApiConfig;
-import com.example.apptive_3team.domain.WeatherData;
 import com.example.apptive_3team.dto.WeatherDataDTO;
+import com.example.apptive_3team.entity.WeatherData;
 import com.example.apptive_3team.repository.WeatherRepository;
+import jakarta.transaction.Transactional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -113,7 +114,7 @@ public class WeatherApiService {
         }
 
         Collections.sort(entityList);
-        weatherRepository.saveAll(entityList); // DB 저장
+        saveOrUpdateWeather(entityList); // DB 저장
 
         // Entity → DTO 변환
         return entityList.stream()
@@ -125,5 +126,17 @@ public class WeatherApiService {
                         e.getTemp_avg(),
                         e.getRain_amount()))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void saveOrUpdateWeather(List<WeatherData> newWeatherDataList) {
+        for (WeatherData newWeatherData : newWeatherDataList) {
+            weatherRepository.findByDate(newWeatherData.getDate())
+                    .ifPresent(existingWeather -> {
+                        newWeatherData.setId(existingWeather.getId()); // ID 같게 설정해서 덮어쓰기
+                    });
+
+            weatherRepository.save(newWeatherData); // 새 데이터거나 기존 ID면 update됨
+        }
     }
 }
