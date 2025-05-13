@@ -41,3 +41,4 @@ public class WeatherData implements Comparable<WeatherData>{
         return this.date.compareTo(other.date); // 문자열로 날짜 비교 (yyyy-MM-dd 형식이면 이대로 정렬 가능)
     }
 }
+
